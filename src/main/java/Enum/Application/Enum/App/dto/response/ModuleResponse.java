@@ -1,12 +1,13 @@
 package Enum.Application.Enum.App.dto.response;
 
+
 import lombok.*;
 
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
-public class CourseUpdateResponse {
+public class ModuleResponse {
     private String message;
 }
