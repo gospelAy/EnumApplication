@@ -2,6 +2,7 @@ package Enum.Application.Enum.App.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import java.util.List;
 
 @Entity
 @Getter
@@ -15,5 +16,10 @@ public class Post {
     private Long id;
     private String title;
     private String postDetails;
-    private Long forumId;
+
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    private List<Comment> comments;
+
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    private List<Like> likes;
 }

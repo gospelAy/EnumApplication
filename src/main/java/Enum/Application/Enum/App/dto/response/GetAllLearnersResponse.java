@@ -5,11 +5,12 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
 @Builder
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class GetModuleResponse {
-    private Long id;
-    private String modules;
+public class GetAllLearnersResponse {
+    private String id;
+    private String name;
+    private String email;
 }

@@ -1,6 +1,7 @@
 package Enum.Application.Enum.App.contoller;
 
 import Enum.Application.Enum.App.dto.request.LearnerRegistrationRequest;
+import Enum.Application.Enum.App.dto.response.GetAllLearnersResponse;
 import Enum.Application.Enum.App.dto.response.LearnerResponse;
 import Enum.Application.Enum.App.model.Learner;
 import Enum.Application.Enum.App.service.LearnerService;
@@ -32,7 +33,7 @@ public class LearnerController {
     }
 
     @GetMapping("/getAllLearner")
-    public Page<LearnerResponse> getAllLearner(Pageable pageable) {
+    public Page<GetAllLearnersResponse> getAllLearner(Pageable pageable) {
         return learnerService.getAllLearner(pageable);
     }
 

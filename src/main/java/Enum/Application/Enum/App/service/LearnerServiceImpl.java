@@ -1,6 +1,7 @@
 package Enum.Application.Enum.App.service;
 
 import Enum.Application.Enum.App.dto.request.LearnerRegistrationRequest;
+import Enum.Application.Enum.App.dto.response.GetAllLearnersResponse;
 import Enum.Application.Enum.App.dto.response.LearnerResponse;
 import Enum.Application.Enum.App.exceptions.LearnerNotFoundException;
 import Enum.Application.Enum.App.model.Learner;
@@ -55,9 +56,9 @@ public class LearnerServiceImpl implements LearnerService {
     }
 
     @Override
-    public Page<LearnerResponse> getAllLearner(Pageable pageable) {
+    public Page<GetAllLearnersResponse> getAllLearner(Pageable pageable) {
         return learnerRepository.findAll(pageable)
-                .map(learner -> modelMapper.map(learner, LearnerResponse.class));
+                .map(learner -> modelMapper.map(learner, GetAllLearnersResponse.class));
     }
 
     @Override

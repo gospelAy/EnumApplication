@@ -16,27 +16,27 @@ public class SessionController {
 
     private final SessionService sessionService;
 
-    @PostMapping
+    @PostMapping("/create")
     public SessionRegistrationResponse createSession(@RequestBody SessionRegistrationRequest request) {
         return sessionService.createSession(request);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("getSessionById/{id}")
     public Session getSessionById(@PathVariable Long id) {
         return sessionService.getSessionById(id);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("updateSessionById/{id}")
     public String updateSession(@PathVariable Long id, @RequestBody SessionRegistrationRequest request) {
         return sessionService.updateSession(id, request);
     }
 
-    @GetMapping
+    @GetMapping("/getAllSession")
     public Page<SessionRegistrationResponse> getAllSessions(Pageable pageable) {
         return sessionService.getAllSessions(pageable);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("deleteSession/{id}")
     public String deleteSessionById(@PathVariable Long id) {
         return sessionService.deleteSessionById(id);
     }

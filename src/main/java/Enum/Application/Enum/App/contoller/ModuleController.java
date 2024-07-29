@@ -1,6 +1,7 @@
 package Enum.Application.Enum.App.contoller;
 
 import Enum.Application.Enum.App.dto.request.ModuleRegistrationRequest;
+import Enum.Application.Enum.App.dto.request.ModuleUpdateRequest;
 import Enum.Application.Enum.App.dto.response.GetModuleResponse;
 import Enum.Application.Enum.App.dto.response.ModuleResponse;
 import Enum.Application.Enum.App.service.ModuleService;
@@ -28,7 +29,7 @@ public class ModuleController {
     }
 
     @PutMapping("/update/{id}")
-    public String updateModule(@PathVariable Long id, @RequestBody ModuleRegistrationRequest request) {
+    public String updateModule(@PathVariable Long id, @RequestBody ModuleUpdateRequest request) {
         return moduleService.updateModule(id, request);
     }
 

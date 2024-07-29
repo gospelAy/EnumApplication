@@ -16,6 +16,6 @@ public class CourseModule {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String modules;
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Session> sessions;
 }

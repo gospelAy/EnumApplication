@@ -1,14 +1,13 @@
 package Enum.Application.Enum.App.dto.response;
 
-import lombok.Builder;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Data
 @Builder
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class SessionRegistrationResponse {
     private Long id;
     private String name;

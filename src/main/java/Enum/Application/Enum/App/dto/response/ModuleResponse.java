@@ -9,5 +9,6 @@ import lombok.*;
 @Getter
 @Setter
 public class ModuleResponse {
+    private Long id;
     private String message;
 }

@@ -18,10 +18,8 @@ public class Instructor {
     private String email;
     private String profession;
     private String about;
-    @ManyToOne
-    private Course course;
-    @Enumerated(EnumType.STRING)
-    private Status status;
+    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    private Course course;;
     private LocalDateTime dateAdded;
     private LocalDateTime lastActive;
 }

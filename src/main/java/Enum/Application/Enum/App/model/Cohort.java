@@ -8,6 +8,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.ArrayList;
 
 
 @Entity
@@ -32,7 +33,7 @@ public class Cohort {
     private LocalDate endDate;
     private String cohortAvatar;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Course> courses;
+    private List<Course> courses = new ArrayList<>();
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private List<Learner> learners;
 }

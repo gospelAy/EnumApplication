@@ -1,9 +1,6 @@
 package Enum.Application.Enum.App.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
@@ -12,9 +9,9 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Forum {
+public class Like {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String forumName;
+
 }

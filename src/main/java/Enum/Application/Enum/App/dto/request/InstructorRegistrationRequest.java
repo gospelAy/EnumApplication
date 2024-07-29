@@ -15,6 +15,4 @@ public class InstructorRegistrationRequest {
     private String email;
     private String Profession;
     private String about;
-    private LocalDateTime dateAdded;
-    private LocalDateTime lastActive;
 }

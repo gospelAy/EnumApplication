@@ -9,6 +9,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CohortUpdateResponse {
+    private Long id;
     private String message;
 }
 

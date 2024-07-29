@@ -129,7 +129,5 @@ public class CohortServiceImp implements CohortService {
                 .message(INVITE_SUCCESS_MESSAGE)
                 .build();
     }
-
-
 }
 
