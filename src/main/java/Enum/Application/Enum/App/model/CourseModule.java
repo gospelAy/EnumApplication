@@ -3,6 +3,7 @@ package Enum.Application.Enum.App.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -17,5 +18,5 @@ public class CourseModule {
     private Long id;
     private String modules;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Session> sessions;
+    private List<Session> sessions = new ArrayList<>();
 }

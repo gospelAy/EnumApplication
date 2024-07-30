@@ -9,6 +9,7 @@ import lombok.*;
 public class GetInstructorResponse {
         private Long id;
         private String name;
+        private String email;
         private String Profession;
         private String about;
     }

@@ -74,12 +74,6 @@ public class ModuleServiceImpl implements ModuleService {
         return modulesRepository.findAll(pageable)
                 .map(courseModule -> modelMapper.map(courseModule, GetModuleResponse.class));
     }
-//    @Override
-//    @Transactional(readOnly = true)
-//    public Page<GetCohortResponse> getAllCohorts(Pageable pageable) {
-//        return cohortRepository.findAll(pageable)
-//                .map(cohort -> modelMapper.map(cohort, GetCohortResponse.class));
-//    }
 
     @Override
     public String deleteModulesById(Long id) {

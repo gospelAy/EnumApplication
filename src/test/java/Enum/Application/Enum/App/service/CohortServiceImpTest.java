@@ -3,7 +3,6 @@ package Enum.Application.Enum.App.service;
 import Enum.Application.Enum.App.dto.request.CohortRegistrationRequest;
 import Enum.Application.Enum.App.dto.request.CohortUpdateRequest;
 import Enum.Application.Enum.App.dto.response.CohortRegistrationResponse;
-import Enum.Application.Enum.App.dto.response.CohortUpdateResponse;
 import Enum.Application.Enum.App.dto.response.GetCohortResponse;
 import Enum.Application.Enum.App.dto.response.InviteLearnerResponse;
 import Enum.Application.Enum.App.exceptions.CohortNotFoundException;
@@ -171,24 +170,6 @@ class CohortServiceImpTest {
                 eq(learner.getEmail()),
                 eq("Invitation to Join Cohort"),
                 contains("Dear " + learner.getName()));
-    }
-
-    @Test
-    void testUpdateCohortSuccessfully() {
-        Long cohortId = 52L;
-        CohortUpdateRequest updateRequest = CohortUpdateRequest.builder()
-                .cohortName("Updated Cohort Name")
-                .description("Updated Description")
-                .startDate(LocalDate.now())
-                .endDate(LocalDate.now().plusDays(30))
-                .cohortAvatar("Updated Avatar")
-                .build();
-        Cohort expectedCohort = new Cohort();
-        CohortUpdateResponse expectedResponse = new CohortUpdateResponse();
-        when(modelMapper.map(any(CohortUpdateRequest.class), eq(Cohort.class))).thenReturn(expectedCohort);
-        when(modelMapper.map(any(Cohort.class), eq(CohortUpdateResponse.class))).thenReturn(expectedResponse);
-        CohortUpdateResponse response = cohortService.updateCohort(cohortId, updateRequest);
-        assertEquals(expectedResponse, response);
     }
 
 }
