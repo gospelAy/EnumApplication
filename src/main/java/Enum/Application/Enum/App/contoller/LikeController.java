@@ -13,7 +13,7 @@ public class LikeController {
     @Autowired
     private LikeService likeService;
 
-    @PostMapping
+    @PostMapping("/addLikeToPost")
     public ResponseEntity<Like> addLikeToPost(@PathVariable Long postId, @RequestBody Like like) {
         Like addedLike = likeService.addLikeToPost(postId, like);
         if (addedLike != null) {

@@ -14,7 +14,7 @@ public class CommentController {
     @Autowired
     private CommentService commentService;
 
-    @PostMapping
+    @PostMapping("/addCommentToPost")
     public ResponseEntity<Comment> addCommentToPost(@PathVariable Long postId, @RequestBody Comment comment) {
         Comment addedComment = commentService.addCommentToPost(postId, comment);
         if (addedComment != null) {
@@ -24,7 +24,7 @@ public class CommentController {
         }
     }
 
-    @GetMapping
+    @GetMapping("/getCommentsByPostId")
     public ResponseEntity<List<Comment>> getCommentsByPostId(@PathVariable Long postId) {
         List<Comment> comments = commentService.getCommentsByPostId(postId);
         if (comments != null) {

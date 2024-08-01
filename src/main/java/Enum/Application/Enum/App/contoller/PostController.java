@@ -15,25 +15,25 @@ public class PostController {
     @Autowired
     private PostService postService;
 
-    @GetMapping
+    @GetMapping("/getAllPost")
     public List<Post> getAllPosts() {
         return postService.getAllPosts();
     }
 
-    @PostMapping
+    @PostMapping("/createPost")
     public ResponseEntity<Post> createPost(@RequestBody Post post) {
         Post createdPost = postService.createPost(post);
         return ResponseEntity.ok(createdPost);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/getPostById/{id}")
     public ResponseEntity<Post> getPostById(@PathVariable Long id) {
         Optional<Post> post = postService.getPostById(id);
         return post.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/deletePostById/{id}")
     public ResponseEntity<Void> deletePost(@PathVariable Long id) {
         postService.deletePost(id);
         return ResponseEntity.noContent().build();
