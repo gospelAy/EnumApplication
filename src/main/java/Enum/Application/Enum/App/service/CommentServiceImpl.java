@@ -1,40 +1,56 @@
 package Enum.Application.Enum.App.service;
 
+import Enum.Application.Enum.App.dto.request.CommentRequest;
+import Enum.Application.Enum.App.dto.response.CommentResponse;
 import Enum.Application.Enum.App.model.Comment;
+import Enum.Application.Enum.App.model.Learner;
 import Enum.Application.Enum.App.model.Post;
 import Enum.Application.Enum.App.repository.CommentRepository;
+import Enum.Application.Enum.App.repository.LearnerRepository;
 import Enum.Application.Enum.App.repository.PostRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
-
 @Service
+@RequiredArgsConstructor
 public class CommentServiceImpl implements CommentService {
-
-    @Autowired
-    private CommentRepository commentRepository;
-
-    @Autowired
-    private PostRepository postRepository;
+    private final CommentRepository commentRepository;
+    private final PostRepository postRepository;
+    private final LearnerRepository learnerRepository;
 
     @Override
-    public Comment addCommentToPost(Long postId, Comment comment) {
-        Optional<Post> postOptional = postRepository.findById(postId);
-        if (postOptional.isPresent()) {
-            Post post = postOptional.get();
-            post.getComments().add(comment);
-            postRepository.save(post);
-            return comment;
+    public CommentResponse addComment(CommentRequest commentRequest) {
+        Post post = postRepository.findById(commentRequest.getPostId())
+                .orElseThrow(() -> new RuntimeException("Post not found"));
+        Learner learner = learnerRepository.findById(commentRequest.getLearnerId())
+                .orElseThrow(() -> new RuntimeException("Learner not found"));
+        Comment comment = Comment.builder()
+                .comment(commentRequest.getComment())
+                .post(post)
+                .learner(learner)
+                .build();
+        Comment savedComment = commentRepository.save(comment);
+        return mapToCommentResponse(savedComment);
+    }
+
+    private CommentResponse mapToCommentResponse(Comment comment) {
+        if (comment == null) {
+            throw new IllegalArgumentException("Comment cannot be null");
         }
-        return null;
+        Post post = comment.getPost();
+        Learner learner = comment.getLearner();
+        if (post == null || learner == null) {
+            throw new IllegalArgumentException("Post or Learner cannot be null");
+        }
+        return CommentResponse.builder()
+                .id(comment.getId())
+                .comment(comment.getComment())
+                .postId(post.getId())
+                .learnerId(learner.getId())
+                .createdAt(comment.getCreatedAt())
+                .build();
     }
 
-    @Override
-    public List<Comment> getCommentsByPostId(Long postId) {
-        return postRepository.findById(postId)
-                .map(Post::getComments)
-                .orElse(null);
-    }
 }
+
+

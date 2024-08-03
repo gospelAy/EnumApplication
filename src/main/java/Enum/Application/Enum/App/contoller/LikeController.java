@@ -1,31 +1,27 @@
 package Enum.Application.Enum.App.contoller;
 
-import Enum.Application.Enum.App.model.Like;
+import Enum.Application.Enum.App.dto.request.LikeRequest;
+import Enum.Application.Enum.App.dto.response.LikeResponse;
 import Enum.Application.Enum.App.service.LikeService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/posts/{postId}/likes")
+@RequestMapping("/api/likes")
+@RequiredArgsConstructor
 public class LikeController {
 
-    @Autowired
-    private LikeService likeService;
+    private final LikeService likeService;
 
-    @PostMapping("/addLikeToPost")
-    public ResponseEntity<Like> addLikeToPost(@PathVariable Long postId, @RequestBody Like like) {
-        Like addedLike = likeService.addLikeToPost(postId, like);
-        if (addedLike != null) {
-            return ResponseEntity.ok(addedLike);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
-
-    @GetMapping("/count")
-    public ResponseEntity<Integer> getLikesCountByPostId(@PathVariable Long postId) {
-        int likeCount = likeService.getLikesCountByPostId(postId);
-        return ResponseEntity.ok(likeCount);
+    @PostMapping("/addLike")
+    public ResponseEntity<LikeResponse> addLike(@RequestBody LikeRequest likeRequest) {
+        LikeResponse likeResponse = likeService.addLike(likeRequest);
+        return new ResponseEntity<>(likeResponse, HttpStatus.CREATED);
     }
 }
+

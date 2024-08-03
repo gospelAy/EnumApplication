@@ -7,7 +7,8 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class PostRequest {
-    private String title;
-    private String postDetails;
+public class CommentRequest {
+    private Long postId;
+    private Long learnerId;
+    private String comment;
 }

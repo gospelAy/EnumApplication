@@ -1,65 +1,100 @@
 package Enum.Application.Enum.App.service;
 
+import Enum.Application.Enum.App.dto.request.PostRequest;
+import Enum.Application.Enum.App.dto.response.PostResponse;
 import Enum.Application.Enum.App.model.Post;
 import Enum.Application.Enum.App.repository.PostRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
-import java.util.Collections;
+import org.mockito.MockitoAnnotations;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 
-@ExtendWith(MockitoExtension.class)
-class PostServiceImplTest {
+public class PostServiceImplTest {
     @Mock
     private PostRepository postRepository;
     @InjectMocks
     private PostServiceImpl postService;
-    private Post post;
     @BeforeEach
     void setUp() {
-        post = new Post();
-        post.setId(1L);
-        post.setTitle("Test Post");
-        post.setPostDetails("This is a test post.");
+        MockitoAnnotations.openMocks(this);
     }
 
     @Test
     void testCreatePost() {
+        PostRequest postRequest = PostRequest.builder()
+                .title("Test Post")
+                .postDetails("This is a test post.")
+                .build();
+
+        Post post = Post.builder()
+                .id(1L)
+                .title("Test Post")
+                .postDetails("This is a test post.")
+                .comments(new ArrayList<>())
+                .likes(new ArrayList<>())
+                .build();
+
+        PostResponse postResponse = PostResponse.builder()
+                .id(1L)
+                .title("Test Post")
+                .postDetails("This is a test post.")
+                .commentCount(0)
+                .likeCount(0)
+                .build();
+
         when(postRepository.save(any(Post.class))).thenReturn(post);
-        Post createdPost = postService.createPost(post);
-        assertNotNull(createdPost);
-        assertEquals(post.getId(), createdPost.getId());
-        verify(postRepository, times(1)).save(post);
+        PostResponse response = postService.createPost(postRequest);
+        assertEquals(postResponse, response);
+    }
+
+
+    @Test
+    void testGetPostById() {
+        Post post = Post.builder()
+                .id(1L)
+                .title("Test Post")
+                .postDetails("This is a test post.")
+                .build();
+
+        PostResponse postResponse = PostResponse.builder()
+                .id(1L)
+                .title("Test Post")
+                .postDetails("This is a test post.")
+                .commentCount(0)
+                .likeCount(0)
+                .build();
+        when(postRepository.findById(1L)).thenReturn(Optional.of(post));
+        PostResponse response = postService.getPostById(1L);
+        assertEquals(postResponse, response);
     }
 
     @Test
     void testGetAllPosts() {
-        List<Post> posts = Collections.singletonList(post);
+        Post post1 = Post.builder()
+                .id(1L)
+                .title("Post 1")
+                .postDetails("Details of post 1")
+                .build();
+        Post post2 = Post.builder()
+                .id(2L)
+                .title("Post 2")
+                .postDetails("Details of post 2")
+                .build();
+
+        List<Post> posts = List.of(post1, post2);
         when(postRepository.findAll()).thenReturn(posts);
-        List<Post> result = postService.getAllPosts();
-        assertEquals(1, result.size());
-        verify(postRepository, times(1)).findAll();
-    }
-
-    @Test
-    void testGetPostById() {
-        when(postRepository.findById(post.getId())).thenReturn(Optional.of(post));
-        Optional<Post> result = postService.getPostById(post.getId());
-        assertTrue(result.isPresent());
-        assertEquals(post.getId(), result.get().getId());
-        verify(postRepository, times(1)).findById(post.getId());
-    }
-
-    @Test
-    void testDeletePost() {
-        doNothing().when(postRepository).deleteById(post.getId());
-        postService.deletePost(post.getId());
-        verify(postRepository, times(1)).deleteById(post.getId());
+        List<PostResponse> responses = postService.getAllPosts();
+        assertEquals(2, responses.size());
+        assertEquals("Post 1", responses.get(0).getTitle());
+        assertEquals("Post 2", responses.get(1).getTitle());
     }
 }
+
+

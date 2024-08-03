@@ -1,41 +1,44 @@
 package Enum.Application.Enum.App.contoller;
 
-import Enum.Application.Enum.App.model.Post;
+import Enum.Application.Enum.App.dto.request.PostRequest;
+import Enum.Application.Enum.App.dto.response.PostResponse;
 import Enum.Application.Enum.App.service.PostService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/posts")
+@RequiredArgsConstructor
 public class PostController {
-    @Autowired
-    private PostService postService;
 
-    @GetMapping("/getAllPost")
-    public List<Post> getAllPosts() {
-        return postService.getAllPosts();
-    }
+    private final PostService postService;
 
     @PostMapping("/createPost")
-    public ResponseEntity<Post> createPost(@RequestBody Post post) {
-        Post createdPost = postService.createPost(post);
-        return ResponseEntity.ok(createdPost);
+    public ResponseEntity<PostResponse> createPost(@RequestBody PostRequest postRequest) {
+        PostResponse postResponse = postService.createPost(postRequest);
+        return new ResponseEntity<>(postResponse, HttpStatus.CREATED);
     }
 
     @GetMapping("/getPostById/{id}")
-    public ResponseEntity<Post> getPostById(@PathVariable Long id) {
-        Optional<Post> post = postService.getPostById(id);
-        return post.map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<PostResponse> getPostById(@PathVariable Long id) {
+        PostResponse postResponse = postService.getPostById(id);
+        return ResponseEntity.ok(postResponse);
     }
 
-    @DeleteMapping("/deletePostById/{id}")
+    @GetMapping("/getAllPost")
+    public ResponseEntity<List<PostResponse>> getAllPosts() {
+        List<PostResponse> posts = postService.getAllPosts();
+        return ResponseEntity.ok(posts);
+    }
+
+    @DeleteMapping("/deletePost/{id}")
     public ResponseEntity<Void> deletePost(@PathVariable Long id) {
         postService.deletePost(id);
         return ResponseEntity.noContent().build();
     }
 }
+

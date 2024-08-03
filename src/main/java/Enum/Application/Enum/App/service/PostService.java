@@ -1,13 +1,14 @@
 package Enum.Application.Enum.App.service;
 
-import Enum.Application.Enum.App.model.Post;
-import java.util.List;
-import java.util.Optional;
 
+import Enum.Application.Enum.App.dto.request.PostRequest;
+import Enum.Application.Enum.App.dto.response.PostResponse;
+
+import java.util.List;
 
 public interface PostService {
-    List<Post> getAllPosts();
-    Post createPost(Post post);
-    Optional<Post> getPostById(Long id);
+    PostResponse createPost(PostRequest postRequest);
+    PostResponse getPostById(Long id);
+    List<PostResponse> getAllPosts();
     void deletePost(Long id);
 }

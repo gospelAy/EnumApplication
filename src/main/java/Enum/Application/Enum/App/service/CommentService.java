@@ -1,9 +1,8 @@
 package Enum.Application.Enum.App.service;
 
-import Enum.Application.Enum.App.model.Comment;
-import java.util.List;
+import Enum.Application.Enum.App.dto.request.CommentRequest;
+import Enum.Application.Enum.App.dto.response.CommentResponse;
 
 public interface CommentService {
-    Comment addCommentToPost(Long postId, Comment comment);
-    List<Comment> getCommentsByPostId(Long postId);
+    CommentResponse addComment(CommentRequest commentRequest);
 }

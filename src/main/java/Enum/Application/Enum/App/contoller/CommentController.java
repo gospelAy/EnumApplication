@@ -1,36 +1,28 @@
 package Enum.Application.Enum.App.contoller;
 
-import Enum.Application.Enum.App.model.Comment;
+import Enum.Application.Enum.App.dto.request.CommentRequest;
+import Enum.Application.Enum.App.dto.response.CommentResponse;
 import Enum.Application.Enum.App.service.CommentService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import java.util.List;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/posts/{postId}/comments")
+@RequestMapping("/comments")
+@RequiredArgsConstructor
 public class CommentController {
 
-    @Autowired
-    private CommentService commentService;
+    private final CommentService commentService;
 
-    @PostMapping("/addCommentToPost")
-    public ResponseEntity<Comment> addCommentToPost(@PathVariable Long postId, @RequestBody Comment comment) {
-        Comment addedComment = commentService.addCommentToPost(postId, comment);
-        if (addedComment != null) {
-            return ResponseEntity.ok(addedComment);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
-
-    @GetMapping("/getCommentsByPostId")
-    public ResponseEntity<List<Comment>> getCommentsByPostId(@PathVariable Long postId) {
-        List<Comment> comments = commentService.getCommentsByPostId(postId);
-        if (comments != null) {
-            return ResponseEntity.ok(comments);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    @PostMapping("/addComment")
+    public ResponseEntity<CommentResponse> addComment(@RequestBody CommentRequest commentRequest) {
+        CommentResponse commentResponse = commentService.addComment(commentRequest);
+        return new ResponseEntity<>(commentResponse, HttpStatus.CREATED);
     }
 }
+
+

@@ -8,10 +8,8 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 @EqualsAndHashCode
-public class PostResponse {
+public class LikeResponse {
     private Long id;
-    private String title;
-    private String postDetails;
-    private int commentCount;
-    private int likeCount;
+    private Long postId;
+    private Long learnerId;
 }

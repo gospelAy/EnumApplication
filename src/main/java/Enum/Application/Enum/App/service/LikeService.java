@@ -1,9 +1,9 @@
 package Enum.Application.Enum.App.service;
 
-import Enum.Application.Enum.App.model.Like;
-import java.util.List;
+
+import Enum.Application.Enum.App.dto.request.LikeRequest;
+import Enum.Application.Enum.App.dto.response.LikeResponse;
 
 public interface LikeService {
-    Like addLikeToPost(Long postId, Like like);
-    int getLikesCountByPostId(Long postId);
+    LikeResponse addLike(LikeRequest likeRequest);
 }
