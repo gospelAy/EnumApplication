@@ -56,7 +56,6 @@ class CohortServiceImpTest {
     private Program program;
     private CohortRegistrationRequest cohortRegistrationRequest;
 
-    private CohortUpdateRequest cohortUpdateRequest;
 
     @BeforeEach
     void setUp() {

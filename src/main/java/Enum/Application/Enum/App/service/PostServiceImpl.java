@@ -3,6 +3,7 @@ package Enum.Application.Enum.App.service;
 
 import Enum.Application.Enum.App.dto.request.PostRequest;
 import Enum.Application.Enum.App.dto.response.PostResponse;
+import Enum.Application.Enum.App.exceptions.PostException;
 import Enum.Application.Enum.App.model.Post;
 import Enum.Application.Enum.App.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +28,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public PostResponse getPostById(Long id) {
-        Post post = postRepository.findById(id).orElseThrow(() -> new RuntimeException("Post not found"));
+        Post post = postRepository.findById(id).orElseThrow(() -> new PostException("Post not found"));
         return mapToPostResponse(post);
     }
 

@@ -3,6 +3,7 @@ package Enum.Application.Enum.App.service;
 
 import Enum.Application.Enum.App.dto.request.LikeRequest;
 import Enum.Application.Enum.App.dto.response.LikeResponse;
+import Enum.Application.Enum.App.exceptions.LikeException;
 import Enum.Application.Enum.App.model.Learner;
 import Enum.Application.Enum.App.model.Like;
 import Enum.Application.Enum.App.model.Post;
@@ -22,9 +23,9 @@ public class LikeServiceImpl implements LikeService {
     @Override
     public LikeResponse addLike(LikeRequest likeRequest) {
         Post post = postRepository.findById(likeRequest.getPostId())
-                .orElseThrow(() -> new RuntimeException("Post not found"));
+                .orElseThrow(() -> new LikeException("Post not found"));
         Learner learner = learnerRepository.findById(likeRequest.getLearnerId())
-                .orElseThrow(() -> new RuntimeException("Learner not found"));
+                .orElseThrow(() -> new LikeException("Learner not found"));
         Like like = Like.builder()
                 .post(post)
                 .learner(learner)

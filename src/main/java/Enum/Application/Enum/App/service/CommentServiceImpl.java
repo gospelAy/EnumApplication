@@ -2,6 +2,7 @@ package Enum.Application.Enum.App.service;
 
 import Enum.Application.Enum.App.dto.request.CommentRequest;
 import Enum.Application.Enum.App.dto.response.CommentResponse;
+import Enum.Application.Enum.App.exceptions.CommentException;
 import Enum.Application.Enum.App.model.Comment;
 import Enum.Application.Enum.App.model.Learner;
 import Enum.Application.Enum.App.model.Post;
@@ -21,9 +22,9 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public CommentResponse addComment(CommentRequest commentRequest) {
         Post post = postRepository.findById(commentRequest.getPostId())
-                .orElseThrow(() -> new RuntimeException("Post not found"));
+                .orElseThrow(() -> new CommentException("Post not found"));
         Learner learner = learnerRepository.findById(commentRequest.getLearnerId())
-                .orElseThrow(() -> new RuntimeException("Learner not found"));
+                .orElseThrow(() -> new CommentException("Learner not found"));
         Comment comment = Comment.builder()
                 .comment(commentRequest.getComment())
                 .post(post)
@@ -35,12 +36,12 @@ public class CommentServiceImpl implements CommentService {
 
     private CommentResponse mapToCommentResponse(Comment comment) {
         if (comment == null) {
-            throw new IllegalArgumentException("Comment cannot be null");
+            throw new CommentException("Comment cannot be null");
         }
         Post post = comment.getPost();
         Learner learner = comment.getLearner();
         if (post == null || learner == null) {
-            throw new IllegalArgumentException("Post or Learner cannot be null");
+            throw new CommentException("Post or Learner cannot be null");
         }
         return CommentResponse.builder()
                 .id(comment.getId())
